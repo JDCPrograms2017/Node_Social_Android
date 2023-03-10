@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="152dp"
+        android:layout_height="164dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:src="@drawable/nodesociallogo" />
+
+    <EditText
+        android:id="@+id/edt_email"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/app_logo"
+        android:layout_marginTop="10dp"
+        android:hint="Email"
+        android:background="@drawable/edt_background"
+        android:paddingLeft="15dp"
+        android:inputType="textNoSuggestions"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <EditText
+        android:id="@+id/edt_password"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/edt_email"
+        android:layout_marginTop="10dp"
+        android:hint="Password"
+        android:background="@drawable/edt_background"
+        android:paddingLeft="15dp"
+        android:inputType="textPassword"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:id="@+id/error_message"
+        android:layout_below="@+id/edt_password"
+        android:layout_width="200dp"
+        android:layout_height="25dp"
+        android:layout_centerHorizontal="true"
+        android:text="User does not exist!"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textColor="@color/error_red"/>
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/error_message"
+        android:text="Log in"
+        android:background="@drawable/button_background"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/button_signup"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_login"
+        android:text="Sign up"
+        android:background="@drawable/button_background"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>
