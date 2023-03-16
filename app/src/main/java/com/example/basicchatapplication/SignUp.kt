@@ -9,6 +9,8 @@ import android.widget.EditText
 import android.widget.Switch
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class SignUp : AppCompatActivity() {
 
@@ -17,6 +19,7 @@ class SignUp : AppCompatActivity() {
     private lateinit var edtPassword: EditText
     private lateinit var buttonSignup: Button
     private lateinit var showPasswordSwitch: Switch
+    private lateinit var mDatabaseRef: DatabaseReference
 
     private lateinit var mAuth: FirebaseAuth
 
@@ -35,10 +38,11 @@ class SignUp : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
 
         buttonSignup.setOnClickListener {
+            val name = edtName.text.toString()
             val email = edtEmail.text.toString()
             val password = edtPassword.text.toString()
 
-            signUp(email, password)
+            signUp(name, email, password)
         }
 
         showPasswordSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -51,13 +55,15 @@ class SignUp : AppCompatActivity() {
         }
     }
 
-    private fun signUp(email: String, password: String) {
+    private fun signUp(name: String, email: String, password: String) {
         // the process for creating a user
         mAuth.createUserWithEmailAndPassword(email, password) // referenced from https://firebase.google.com/docs/auth/android/password-auth
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, jump to the home activity
+                    // Sign in success, jump to the home activity AND add the new user to our database
+                    addUserToDatabase(name, email, mAuth.currentUser?.uid!!) // the !! makes the datatype NULL safe
                     val intent = Intent(this@SignUp, MainActivity::class.java)
+                    finish() // Finishes and destroys the SignUp activity
                     startActivity(intent)
 
                 } else {
@@ -65,5 +71,11 @@ class SignUp : AppCompatActivity() {
                     Toast.makeText(this@SignUp, "Some error occurred", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    private fun addUserToDatabase(name: String, email: String, uid: String) {
+        // Initializing the real-time database with Firebase
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference()
+        mDatabaseRef.child("user").child(uid).setValue(User(name, email, uid)) // Adds a node to the database that will have a child of the unique user identification
     }
 }

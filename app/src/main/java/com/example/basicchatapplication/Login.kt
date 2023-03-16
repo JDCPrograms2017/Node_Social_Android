@@ -49,7 +49,7 @@ class Login : AppCompatActivity() {
             var email = edtEmail.text.toString()
             var password = edtPassword.text.toString()
 
-            login(email, password);
+            login(email, password)
         }
 
 
@@ -62,6 +62,7 @@ class Login : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, jump to the main page
                     val intent = Intent(this@Login, MainActivity::class.java)
+                    finish() // finishes and destroys the Login activity (so that if we hit the "back" button on our phone, it won't mess stuff up)
                     startActivity(intent)
                 } else {
                     // If sign in fails, display a message to the user.
