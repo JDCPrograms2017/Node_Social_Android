@@ -41,7 +41,10 @@ class MainActivity : AppCompatActivity() {
                 for (postSnapshot in snapshot.children) {
                     // create a current user object and add it to our userList
                     val currentUser = postSnapshot.getValue(User::class.java)
-                    userList.add(currentUser!!) // make sure it's NULL safe
+
+                    if(mAuth.currentUser?.uid != currentUser?.uid) { // if the UID of the logged-in User matches that of the one we want to add, don't add them.
+                        userList.add(currentUser!!) // make sure it's NULL safe
+                    }
                     //println("Added a user to the userList!");
                 }
                 adapter.notifyDataSetChanged()
