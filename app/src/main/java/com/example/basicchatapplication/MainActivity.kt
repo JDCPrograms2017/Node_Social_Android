@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         userRecyclerView = findViewById(R.id.userRecyclerView)
         userRecyclerView.layoutManager = LinearLayoutManager(this)
-        userRecyclerView.adapter = adapter // the adapter that we created earlier for recycling user views
+        userRecyclerView.adapter = adapter // the adapter that we created earlier for recycling User views
 
         // Reading the values from the Firebase Database
         //NOTE: This method from the tutorial displays all existing users in the system.
@@ -40,8 +40,9 @@ class MainActivity : AppCompatActivity() {
                 // snapshot is a particular snapshot of the data
                 for (postSnapshot in snapshot.children) {
                     // create a current user object and add it to our userList
-                    val currentUser = snapshot.getValue(User::class.java)
+                    val currentUser = postSnapshot.getValue(User::class.java)
                     userList.add(currentUser!!) // make sure it's NULL safe
+                    //println("Added a user to the userList!");
                 }
                 adapter.notifyDataSetChanged()
             }
