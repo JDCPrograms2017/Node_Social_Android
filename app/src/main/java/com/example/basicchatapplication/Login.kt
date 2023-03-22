@@ -17,7 +17,8 @@ class Login : AppCompatActivity() {
     private lateinit var edtPassword: EditText
     private lateinit var buttonLogin: Button
     private lateinit var buttonSignup: Button
-    private lateinit var errorMessage: TextView
+    private lateinit var errorMessageDNE: TextView
+    private lateinit var errorMessageInvalidPar: TextView
 
     private lateinit var mAuth: FirebaseAuth
 
@@ -34,9 +35,12 @@ class Login : AppCompatActivity() {
         edtPassword = findViewById(R.id.edt_password)
         buttonLogin = findViewById(R.id.button_login)
         buttonSignup = findViewById(R.id.button_signup)
-        errorMessage = findViewById(R.id.error_message)
+        errorMessageDNE = findViewById(R.id.error_message_DNE)
+        errorMessageInvalidPar = findViewById(R.id.error_message_invalid_params)
 
-        errorMessage.visibility = View.GONE // start the error message out by disappearing
+        errorMessageDNE.visibility = View.INVISIBLE // start the error message out by disappearing
+        errorMessageInvalidPar.visibility = View.INVISIBLE // start the error message out by disappearing
+
         // NOTE: View.INVISIBLE makes the element disappear but still take up space. View.GONE makes it disappear and not take up space
 
 
@@ -49,7 +53,14 @@ class Login : AppCompatActivity() {
             var email = edtEmail.text.toString()
             var password = edtPassword.text.toString()
 
-            login(email, password)
+            if (email.isEmpty() || password.isEmpty()) { // testing for empty or NULL strings
+                if (errorMessageDNE.visibility == View.VISIBLE) {
+                    errorMessageDNE.visibility = View.INVISIBLE
+                }
+                errorMessageInvalidPar.visibility = View.VISIBLE
+            } else {
+                login(email, password)
+            }
         }
 
 
@@ -67,7 +78,10 @@ class Login : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     //Toast.makeText(this@Login, "User does not exist!", Toast.LENGTH_SHORT).show()
-                    errorMessage.visibility = View.VISIBLE
+                    if (errorMessageInvalidPar.visibility == View.VISIBLE) {
+                        errorMessageInvalidPar.visibility = View.INVISIBLE
+                    }
+                    errorMessageDNE.visibility = View.VISIBLE
                 }
             }
     }
