@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.BasicChatApplication" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.BasicChatApplication" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/node_green</item>
         <item name="colorPrimaryVariant">@color/node_green</item>

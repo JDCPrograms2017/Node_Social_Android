@@ -41,7 +41,18 @@
         android:layout_marginRight="20dp"/>
 
     <TextView
-        android:id="@+id/error_message"
+        android:id="@+id/error_message_invalid_params"
+        android:layout_below="@+id/edt_password"
+        android:layout_width="200dp"
+        android:layout_height="25dp"
+        android:layout_centerHorizontal="true"
+        android:text="Invalid parameters!"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textColor="@color/error_red"/>
+
+    <TextView
+        android:id="@+id/error_message_DNE"
         android:layout_below="@+id/edt_password"
         android:layout_width="200dp"
         android:layout_height="25dp"
@@ -55,7 +66,7 @@
         android:id="@+id/button_login"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/error_message"
+        android:layout_below="@id/error_message_DNE"
         android:text="Log in"
         android:background="@drawable/button_background"
         android:layout_centerHorizontal="true"
