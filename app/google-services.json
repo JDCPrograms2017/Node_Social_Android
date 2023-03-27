@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "889213661295",
+    "firebase_url": "https://chatappdemo-fd356-default-rtdb.firebaseio.com",
     "project_id": "chatappdemo-fd356",
     "storage_bucket": "chatappdemo-fd356.appspot.com"
   },
@@ -13,6 +14,43 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "889213661295-g061ogl0arktl3mcrtjqvkc2d0sdcm6j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJb2P3UaAwOx7TJNQpEAErwljgKExXkYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889213661295-g061ogl0arktl3mcrtjqvkc2d0sdcm6j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889213661295:android:3905e85c57004925c35d9a",
+        "android_client_info": {
+          "package_name": "com.example.nodesocialandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889213661295-qj0b62plc2nkhueo8cb8dh0qm4j4vcfk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nodesocialandroid",
+            "certificate_hash": "0a1101414ef1006994f148e6805231800fe633e2"
+          }
+        },
         {
           "client_id": "889213661295-g061ogl0arktl3mcrtjqvkc2d0sdcm6j.apps.googleusercontent.com",
           "client_type": 3

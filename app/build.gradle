@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.basicchatapplication'
+    namespace 'com.example.nodesocialandroid'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.basicchatapplication"
+        applicationId "com.example.nodesocialandroid"
         minSdk 24
         targetSdk 33
         versionCode 1

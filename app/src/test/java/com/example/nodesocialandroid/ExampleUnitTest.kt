@@ -1,4 +1,4 @@
-package com.example.basicchatapplication
+package com.example.nodesocialandroid
 
 import org.junit.Test
 

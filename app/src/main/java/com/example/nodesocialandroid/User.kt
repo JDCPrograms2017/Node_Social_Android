@@ -1,4 +1,4 @@
-package com.example.basicchatapplication
+package com.example.nodesocialandroid
 
 class User {
     // usually in Kotlin we use a data class, but Firebase wants an empty constructor

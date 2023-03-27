@@ -1,4 +1,4 @@
-package com.example.basicchatapplication
+package com.example.nodesocialandroid
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
