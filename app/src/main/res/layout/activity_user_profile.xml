@@ -17,6 +17,7 @@
             android:src="@drawable/icons8_male_user_100"
             android:layout_centerHorizontal="true"
             android:paddingTop="100dp"
+            android:contentDescription="generic male profile icon"
             />
 
         <TextView
@@ -26,7 +27,7 @@
             android:layout_below="@+id/user_icon"
             android:text="John Smith"
             android:layout_centerHorizontal="true"
-            android:textSize="40dp"/>
+            android:textSize="40sp"/>
 
         <TextView
             android:id="@+id/user_profile_description"
@@ -38,6 +39,17 @@
             android:padding="10dp"
             android:text="This is a default description for the current user"
             />
+
+        <Button
+            android:layout_width="500px"
+            android:layout_height="wrap_content"
+            android:id="@+id/goToUserMapBtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20px"
+            android:background="@drawable/button_background"
+            android:text="View Map"
+            android:textSize="50px"
+            android:layout_below="@+id/user_profile_description"/>
 
     </RelativeLayout>
 

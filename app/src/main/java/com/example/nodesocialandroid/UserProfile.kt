@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -15,12 +16,14 @@ import com.google.firebase.database.*
 class UserProfile : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDbRef: DatabaseReference
+    private lateinit var userMapBtn: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profile)
 
         mAuth = FirebaseAuth.getInstance()
         mDbRef = FirebaseDatabase.getInstance().getReference()
+        userMapBtn = findViewById(R.id.goToUserMapBtn)
 
         val txtName = findViewById<TextView>(R.id.username)
         val currentUserUID = mAuth.currentUser?.uid
@@ -36,9 +39,16 @@ class UserProfile : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
+                txtName.text = "John Smith"
                 Log.w(TAG, "loadPost:onCancelled", error.toException())
             }
         })
+
+        userMapBtn.setOnClickListener {
+            val intent = Intent(this@UserProfile, UserLocatorMap::class.java)
+            finish()
+            startActivity(intent)
+        }
 
 
     }
