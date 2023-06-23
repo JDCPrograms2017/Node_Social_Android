@@ -21,9 +21,12 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.location.LocationServices
 import com.example.nodesocialandroid.databinding.ActivityMapsBinding
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
@@ -35,6 +38,7 @@ class UserLocatorMap : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMapsBinding
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var functions: FirebaseFunctions
 
     private var userLat: Double = 0.0
     private var userLong: Double = 0.0
@@ -42,6 +46,8 @@ class UserLocatorMap : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        functions = Firebase.functions // initializing our Firebase Functions variable for API calls to locate nearby users
 
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -90,7 +96,7 @@ class UserLocatorMap : AppCompatActivity(), OnMapReadyCallback {
                         updateDatabaseCoords(userLat, userLong, currentUserID)
                     }
                     else { // Get a new location of the user
-
+                        getNewLocation()
                     }
 
                 }
@@ -136,7 +142,7 @@ class UserLocatorMap : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun getNewLocation() {
-        //TODO: pick up on the video you were watching, lol
+        //TODO: Implement the extraction and storage of the user's realtime position to Firestore (NO LONGER REALTIME DATABASE)
     }
 
     // This function will navigate to the child node in the Firebase Realtime Database and update the user's coordinates
@@ -144,5 +150,15 @@ class UserLocatorMap : AppCompatActivity(), OnMapReadyCallback {
         // This will take in new coords and update the database that we are using with our app to store realtime location information
         val mDatabaseRef = FirebaseDatabase.getInstance().getReference()
         mDatabaseRef.child("user").child(userUID!!)
+    }
+
+    private fun locateNearbyUsers(): Task<String> {
+        return functions
+            .getHttpsCallable("locateNearbyUsers")
+            .call()
+            .continueWith { task ->
+                val result = task.result?.data as String // saves the result of the Task as a String and will return that String template-type Task resultant of the function call
+                result // The result should be basic, non-threatening information about surrounding users INCLUDING: (username, profile information, proximity, etc.)
+            }
     }
 }
