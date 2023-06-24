@@ -22,4 +22,12 @@
         android:paddingTop="5px"
         android:text="Profile"
         android:background="@drawable/button_background"/>
+
+    <Button
+        android:id="@+id/UpdateLocationButton"
+        android:layout_width="200px"
+        android:layout_height="150px"
+        android:layout_below="@+id/MenuButtonUserMap"
+        android:background="@drawable/button_background"
+        android:text="Update Location (TEST)"/>
 </RelativeLayout>

@@ -7,6 +7,8 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.location.LocationRequest
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -39,6 +41,8 @@ class UserLocatorMap : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private lateinit var mAuth: FirebaseAuth
     private lateinit var functions: FirebaseFunctions
+    private lateinit var locationReqNEW: LocationRequest.Builder
+    private lateinit var locationReqOLD: com.google.android.gms.location.LocationRequest
 
     private var userLat: Double = 0.0
     private var userLong: Double = 0.0
@@ -110,9 +114,9 @@ class UserLocatorMap : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    // Checks to see if the user has granted us the permissions we wish to request
+    // Checks to see if the user has granted us the permissions we need
     private fun checkPermissions(): Boolean {
-        return ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun requestPermissions() {
@@ -123,7 +127,7 @@ class UserLocatorMap : AppCompatActivity(), OnMapReadyCallback {
 
     // Checks to see if the user's phone has Location Services enabled
     private fun isLocationEnabled(): Boolean {
-        var locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
 
@@ -143,15 +147,25 @@ class UserLocatorMap : AppCompatActivity(), OnMapReadyCallback {
 
     private fun getNewLocation() {
         //TODO: Implement the extraction and storage of the user's realtime position to Firestore (NO LONGER REALTIME DATABASE)
+        /*
+        * LocationRequest.Builder() REQUIRES API VERSION >= 31 (S or "Snow Cone")
+        */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            locationReqNEW = LocationRequest.Builder(LocationRequest.PASSIVE_INTERVAL)
+        } else { // If the device's Android API version is < 31, we will use the deprecated method (REVISIT IN CASE OF DISCONTINUATION)
+            locationReqOLD = com.google.android.gms.location.LocationRequest()
+        }
     }
 
     // This function will navigate to the child node in the Firebase Realtime Database and update the user's coordinates
     private fun updateDatabaseCoords(userLatitude: Double?, userLongitude: Double?, userUID: String?) {
+        // TODO: Update this to send the new coordinates to Firestore instead of Realtime Database
         // This will take in new coords and update the database that we are using with our app to store realtime location information
         val mDatabaseRef = FirebaseDatabase.getInstance().getReference()
         mDatabaseRef.child("user").child(userUID!!)
     }
 
+    // Performs an API call to our JavaScript backend via Firebase Functions
     private fun locateNearbyUsers(): Task<String> {
         return functions
             .getHttpsCallable("locateNearbyUsers")
